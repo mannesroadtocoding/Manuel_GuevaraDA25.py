@@ -1,0 +1,13 @@
+import matplotlib.pyplot as plt
+import seaborn as sns
+import pandas as pd
+
+df = pd.read_csv('heart.csv') 
+
+for col in df.select_dtypes(include=['float64', 'int64']).columns:
+    df[col] = df[col].fillna(df[col].mean())
+
+for col in df.select_dtypes(include=['object']).columns:
+    df[col] = df[col].fillna(df[col].mode()[0])  # or .fillna('Unknown')
+
+df.to_csv('cleaned_heart_data.csv', index=False)
